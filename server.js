@@ -19,10 +19,8 @@ const upload = multer({storage: storage})
 const db = require('knex')({
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
-    user: 'postgres',
-    password: 'blackreaper',
-    database: 'file-sharing'
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
   }
 });
 
@@ -68,7 +66,7 @@ app.post('/register', (req, res) => {
 
   const {email, password, name} = req.body;
 
-  var hash = bcrypt.hashSync(password);
+  var hash = bcrypt.hashSync(password); 
 
   db.transaction(trx => {
     trx.insert({
