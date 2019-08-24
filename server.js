@@ -125,6 +125,10 @@ app.post('/signin', (req, res) => {
   .catch(err => res.status(400).json("Wrong info"))
 })
 
+app.get('/', (req, res) => {
+  res.send('It is working')
+})
+
 app.listen(process.env.PORT || 5059, () => {
   console.log('Server is running')
 })
