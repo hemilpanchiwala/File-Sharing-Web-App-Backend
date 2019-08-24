@@ -35,7 +35,8 @@ app.use(cors())
 
 app.post('/files', upload.single('avatar'), (req, res) => {
 
-  const {to_person} = "Hemil"
+  const {to_person} = req.body
+  console.log(to_person)
 
   db("uploads")
   .insert({
@@ -94,6 +95,17 @@ app.post('/register', (req, res) => {
   .catch(err => res.status(400).json('Unable to register'))
 })
 
+app.post('/receivedfiles', (req, res) => {
+
+  return db.select('*').from('uploads')
+    .where('to_person', '=', req.body.to_person)
+    .then(user => {
+      res.json(user)
+    })
+    .catch(err => res.status(400).json("Error in loading user"))
+
+})
+
 app.post('/signin', (req, res) => {
   db.select('email', 'hash').from('login')
   .where('email', '=', req.body.email)
@@ -113,6 +125,6 @@ app.post('/signin', (req, res) => {
   .catch(err => res.status(400).json("Wrong info"))
 })
 
-app.listen(5049, () => {
+app.listen(5059, () => {
   console.log('Server is running')
 })
