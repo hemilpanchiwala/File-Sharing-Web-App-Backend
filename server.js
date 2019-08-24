@@ -107,6 +107,7 @@ app.post('/receivedfiles', (req, res) => {
 })
 
 app.post('/signin', (req, res) => {
+
   db.select('email', 'hash').from('login')
   .where('email', '=', req.body.email)
   .then(data => {
@@ -129,6 +130,6 @@ app.get('/', (req, res) => {
   res.send('It is working')
 })
 
-app.listen(process.env.PORT || 5059, () => {
+app.listen(process.env.PORT, () => {
   console.log('Server is running')
 })
